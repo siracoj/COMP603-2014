@@ -1,0 +1,29 @@
+<<<<<<< HEAD
+1. You can put sets of sequences in a bag for easy transportation 
+2. How ideas ar communicated through sequences of sets of syntax
+3. A compiler reads syntax and converts it to assembly to be converted to
+machine language sent to the CPU
+4. Words? Syntax?
+5. A universally accepted way search through and edit text.
+6. It's quantifiable?(By the way, Tom waits?)
+7. Grammar is the set of rules for a languages syntax 
+8. I have no idea!
+9. Unwelcome
+10. I think parse trees are for priority in parseing, and syntax trees explain
+syntax behavior....
+11. Well that's a context free question
+12. Did I push this correctly?
+=======
+1.  insert
+2.  crappy
+3.  answers
+4.  here
+5.  
+6.  
+7.  
+8.  
+9.  
+10. 
+11. 
+12. 
+>>>>>>> 73274ca98195512d8751d68f2cead13fb293ee38
