@@ -1,5 +1,113 @@
 = COMP603 (Compiler Design)
 
+== May 12
+
+=== Warm up
+
+Cheat at crosswords (and learn about merge conflicts), the easy way!
+
+. http://puzzles.about.com/library/features/dailyxwd/qprmon.htm[Open this crossword in a new tab]
+. Pull from upstream
++
+----
+cd ~/COMP603-2014         # Go to your repo first
+git pull upstream master  # Pull (fetch and merge) the latest and greatest from me
+git mergetool             # Use KDiff3 to merge my stuff in (if you have a conflict)
+----
+. Find words that match something interesting, for example:
++
+----
+grep foo... american-english.txt
+----
+
+=== A case for Theory of Computation
+
+WARNING: Theory of Computation ahead
+
+. The first compiler (for Fortran) took 18 man-years of effort to produce back in the 1950s.
+. CS theory has enabled CS undergraduates understand how to construct compilers within a semester.
+
+=== A hierarchy of languages
+
+Even though languages are sets of strings, it'd be difficult to define useful languages by enumerating all the strings in the set.
+Therefore, CS theorists and mathematicians have developed handy short-cuts to define languages.
+Noam Chomsky categorized languages into a http://en.wikipedia.org/wiki/Chomsky_hierarchy[hierarchy that bears his name].
+
+You've had experience with the most primitive languages (regular languages) and the most complex (recursively enumerable).
+
+=== Regular languages
+
+Regular expressions define regular languages using only three primitives and three rules:
+
+[cols="3", options="header"]
+|===
+|Name
+|Meaning
+|Example
+
+|*Empty Set*
+|Reject everything.
+|{}
+
+|*Empty String*
+|Match the empty string.
+|{+""+}
+
+|*Symbol*
+|Match a single character.
+|{+'a'+}
+
+|*Sequence*
+|Match one regular expression followed by one after another.
+|If +a+ and +b+ are regular expressions, +ab+ matches +a+ followed by +b+
+
+|*Alternation*
+|Match either one regular expression or another.
+|If +a+ and +b+ are regular expressions, +a\|b+ matches {+a+, +b+}.
+
+|*Kleene Star*
+|Match a regular expression zero or more times.
+|If +a+ is a regular expression, +a*+ matches {+""+,+a+,+aa+,+aaa+,...}
+
+|===
+
+== May 9
+
+IMPORTANT: If you haven't already done so by now, <<install-git,install git and frontends>>, and then <<setup-repo,setup your course repository>>.
+
+=== Pre-quiz (How much theory do you know?)
+
+NOTE: Don't worry, this isn't graded (but please do it anyway)
+
+Pretend we're taking a closed-book exam. Answer these questions in a file called +prequiz.txt+ in your repo.
+
+. What is the difference between a set, a bag, and a sequence?
+. What is a language (in terms of sets and sequences)?
++
+Languages are sets of strings.
+. What is a compiler? Name some.
++
+Compilers transform one language into another (typically a source language to a machine language).
++
+Examples include: +gcc+, +javac+, +ghc+, etc.
+. What is the derivative of a language?
+. What is a regular expression?
+. What is a finite automaton, and what is the difference between an NFA and a DFA?
+. What is a grammar, and what is the difference between regular grammars, context-free grammars, LL(k) and LR(k)?
+. What is the difference between derivative parsing, recursive-descent parsing, shift-reduce parsing and parser combinators?
+. What is a visitor?
+. What is the difference between a parse tree and an abstract syntax tree?
+. Name some optimizations.
+. What questions do you have for me?
+
+Now, let's stage, commit and push our stuff off to ensure git is working.
+
+----
+git add prequiz.txt             # Stage prequiz.txt (include in next commit)
+git commit -m "Prequiz answers" # Commit changes with a message
+git push origin master          # Send work to your private repository
+----
+
 == May 7
 
 === Introduction
@@ -11,21 +119,26 @@
 
 === https://raw.githubusercontent.com/lawrancej/COMP603-2014/master/COMP603SyllabusLawrance.docx[Syllabus (Word document)]
 
-=== Install Git and frontends
+* Even though you may develop mobile/web apps or games, compilers are relevant to your career.
+* Writing compilers give you superpowers: (e.g., http://www.robovm.org/[RoboVM], https://github.com/kripken/emscripten/wiki[emscripten])
 
+=== Install Git and frontends
+[[install-git]]
 Windows:: https://code.google.com/p/gitextensions/downloads/list[Install Git Extensions, MSysGit and KDiff3].
 +
 NOTE: Stick to the default settings, but when asked, *choose OpenSSH (not PuTTY)*.
 
 Mac OS X:: http://rowanj.github.io/gitx/[Install GitX-dev].
 +
-NOTE: Newer Macs ship with git; otherwise, http://git-scm.com/download/mac[install git] separately.
+NOTE: https://developer.apple.com/xcode/downloads/[XCode developer tools] ships with git; otherwise, http://git-scm.com/download/mac[install the latest git from here].
 
 Linux:: http://git-scm.com/download/linux[Install git] using your package manager. http://sourceforge.net/projects/qgit/[QGit, a git frontend] may also be available for your distribution.
 +
 NOTE: Don't forget to use +sudo+ with your package manager.
 
 === Setup your course repository
+[[setup-repo]]
+IMPORTANT: You must use LeopardSecure, not LeopardGuest.
 
 All platforms:: Paste this into your terminal (Git Bash on Windows):
 +
@@ -34,4 +147,3 @@ curl https://raw.githubusercontent.com/lawrancej/COMP603-2014/master/starteruppe
 ----
 +
 NOTE: Press +Insert+ to paste in Git Bash.
-
