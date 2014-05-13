@@ -1,5 +1,79 @@
 = COMP603 (Compiler Design)
 
+== May 13
+
+Compilers translate source language(s) to target language(s), and typically consist of the following 'phases':
+
+[cols="4", options="header"]
+|===
+|Phase
+|Description
+|Input
+|Output
+
+|*Scanning / Tokenization*
+|Break source code up into small chunks (tokens) such as identifiers, reserved words, operators, etc
+|Source code
+|Token stream
+
+|*Parsing*
+|Check the syntax of the source code
+|Token stream
+|Parse tree
+
+|*Translation*
+|Translate low level syntax into high-level abstract syntax tree
+|Parse tree
+|Abstract syntax tree, symbol table
+
+|*Optimization*
+|Improve performance or structure
+|Abstract syntax tree, symbol table
+|Abstract synatx tree, symbol table
+
+|*Code generation*
+|Traverse the AST to generate code.
+|Abstract syntax tree, symbol table
+|Target code
+
+|===
+
+=== Lab 1
+
+Do this individually, or in pairs.
+
+NOTE: If working in a pair, go to your github repository settings (on the right side) and add the other person as a collaborator. Then, in your local git repository, add the collaborator's repository as a remote, using +git remote add 'COLLABORATOR' 'SSH_URL'+. Then +git fetch --all+. *DO NOT* push to your collaborator's repository, otherwise they'll be forced to merge in your changes before they can push. Always push to +origin+ (your github repository).
+
+. Choose a single compiler implementation to review (suggestions welcome!)
+
+  * https://github.com/chaoslawful/tcc[Tiny C compiler]
+  * https://github.com/mirrors/gcc[GCC (Compiler for C/C++)]
+  * https://github.com/llvm-mirror/llvm[LLVM (Compiler for C/C++)]
+  * https://github.com/openjdk-mirror/jdk7u-jdk[OpenJDK (Compiler and runtime for Java)]
+  * https://github.com/python/cpython[CPython]
+  * https://bitbucket.org/pypy/pypy[PyPy]
+  * https://github.com/LuaDist/lua[Lua]
+  * https://github.com/ghc/ghc[GHC source (Haskell)]
+  * https://github.com/ghcjs/ghcjs[GHCJS (Haskell to Javascript compiler)]
+  * https://github.com/mozilla/rhino[Java implementation of Javascript]
+  * https://github.com/mono/mono[C# compiler and runtime]
+
+. Identify which files/functions are responsible for each phase in the compiler source.
+. What was the most ridiculous thing you found? (funny comments? awful code?)
+. Take notes along the way (if you find something that's unrelated to a compiler phase, try to infer what it's doing).
+. Write up your findings in a short document and post to your repository (no more than two pages, please). For example:
++
+----
+git add findings.txt
+git commit -m "Lab 1 findings."
+git push origin master
+----
+
+=== Further reading
+
+* http://cm.bell-labs.com/who/ken/trust.html[Reflections on Trusting Trust]
+* https://www.schneier.com/blog/archives/2006/01/countering_trus.html[Countering "Trusting Trust"]
+
 == May 12
 
 === Warm up
@@ -30,7 +104,7 @@ WARNING: Theory of Computation ahead
 === A hierarchy of languages
 
 Even though languages are sets of strings, it'd be difficult to define useful languages by enumerating all the strings in the set.
-Therefore, CS theorists and mathematicians have developed handy short-cuts to define languages.
+Therefore, CS theorists and mathematicians have developed handy short-cuts (formal grammars, state machines, etc.) to define languages.
 Noam Chomsky categorized languages into a http://en.wikipedia.org/wiki/Chomsky_hierarchy[hierarchy that bears his name].
 
 You've had experience with the most primitive languages (regular languages) and the most complex (recursively enumerable).
