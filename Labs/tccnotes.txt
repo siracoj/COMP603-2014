@@ -1,0 +1,42 @@
+Lab 1:
+
+Tiny C Compiler(TCC):
+
+	Source code overview:
+
+		Tokenization:
+			tcc.h
+				Contains "Token Management" function definitions
+			tccpp.c
+				Contains the token scanner for all basic types in the syntaxs(strings, floats, ints)
+				uses buffers to hold the different types in syntax
+		Parser:
+			tccpp.c
+				Contains asm code to parse numbers, strings, and eof chars
+
+		Translation:
+			i386-asm.c/i386-asm.h
+				translates asm to c functions
+			coff.h
+				Holds identifiers for C basic types
+		
+		Optimization:
+			tccelf.c
+				Holds the symbol tree structure
+			tcccoff.c
+				sorts the symbol tree
+		Code generation:
+			arm-gen.c
+			c67-gen.c
+			i386-gen.c
+			x86_64-gen.c
+	
+		
+
+
+
+	Funny Comments/ Bad code:
+
+		Lots of comments like "I guess this is used for relative short jumps..." or I guessed some of these assignments"
+
+
