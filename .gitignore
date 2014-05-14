@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #################
 ## Eclipse
 #################
@@ -213,3 +214,6 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+=======
+*.orig
+>>>>>>> ae7394f796d9f2d925df5778d040179210328695
