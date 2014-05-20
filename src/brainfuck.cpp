@@ -110,47 +110,91 @@ class CommandNode : public Node {
         }
 };
 
-/**
- * Loop publicly extends Node to accept visitors.
- * Loop represents a loop in Brainfuck.
- */
-class Loop : public Node {
-    public:
-        vector<Node*> children;
-        void accept (Visitor * v) {
-            v->visit(this);
-        }
-};
 
 /**
  * Program is the root of a Brainfuck program abstract syntax tree.
  * Because Brainfuck is so primitive, the parse tree is the abstract syntax tree.
  */
-class Program : public Node {
+
+class Sequence : public Node{
+	public:
+		vector<Node*> children;
+};
+
+class Program : public Sequence {
     public:
-        vector<Node*> children;
         void accept (Visitor * v) {
             v->visit(this);
         }
 };
 
 /**
+ * Loop publicly extends Node to accept visitors.
+ * Loop represents a loop in Brainfuck.
+ */
+
+class Loop : public Sequence {
+	public:
+        void accept (Visitor * v) {
+            v->visit(this);
+        }
+};
+/**
  * Read in the file by recursive descent.
  * Modify as necessary and add whatever functions you need to get things done.
  */
-void parse(fstream & file, Program * program) {
-    char c;
-    // How to peek at the next character
-    c = (char)file.peek();
-    // How to print out that character
-    cout << c;
-    // How to read a character from the file and advance to the next character
-    file >> c;
-    // How to print out that character
-    cout << c;
-    // How to insert a node into the program.
-    program->children.push_back(new CommandNode(c));
+
+void command(fstream & file, Sequence * Seq);
+void loop(fstream & file, Sequence * Seq);
+void sequence(fstream & file, Sequence * Seq);
+void parse(fstream & file, Sequence * Seq);
+
+void command(fstream & file, Sequence * Seq){
+	char c;
+	file >> c;
+	Seq->children.push_back(new CommandNode(c));
+	sequence(file, Seq);
 }
+
+
+void loop(fstream & file, Sequence * Seq){
+	Loop * loop = new Loop();
+	char c;
+	file >> c;
+	sequence(file, loop);
+	Seq->children.push_back(loop);
+}
+
+
+void sequence(fstream & file, Sequence * Seq){
+	switch((char)file.peek()){
+		case '+':
+		case '-':
+		case '<':
+		case '>':
+		case ',':
+		case '.':
+			command(file, Seq);
+			break;
+		case '[':
+			loop(file, Seq);
+			break;
+		case EOF:			
+			break;
+		default:
+			char o;
+			file >> o;
+			sequence(file, Seq);
+	}	
+}
+
+void parse(fstream & file, Program * program) {
+	sequence(file, program);
+}
+
+
+	
+
 
 /**
  * A printer for Brainfuck abstract syntax trees.
@@ -170,14 +214,16 @@ class Printer : public Visitor {
             }
         }
         void visit(const Loop * loop) {
+			const vector<Node*> vec = loop->children;
             cout << '[';
-            for (vector<Node*>::const_iterator it = loop->children.begin(); it != loop->children.end(); ++it) {
+            for (vector<Node*>::const_iterator it = vec.begin(); it != vec.end(); ++it) {
                 (*it)->accept(this);
             }
             cout << ']';
         }
         void visit(const Program * program) {
-            for (vector<Node*>::const_iterator it = program->children.begin(); it != program->children.end(); ++it) {
+			const vector<Node*> vec = program->children;
+            for (vector<Node*>::const_iterator it = vec.begin(); it != vec.end(); ++it) {
                 (*it)->accept(this);
             }
         }
