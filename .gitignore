@@ -216,4 +216,9 @@ pip-log.txt
 .mr.developer.cfg
 =======
 *.orig
+<<<<<<< HEAD
 >>>>>>> ae7394f796d9f2d925df5778d040179210328695
+=======
+*.exe
+*.o
+>>>>>>> b0f78c951a697475725c299db1aaae47546f2169
