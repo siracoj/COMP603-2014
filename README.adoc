@@ -1,17 +1,41 @@
 = COMP603 (Compiler Design)
 
+== June 3
+
+=== Lab 4
+Optimize your compiler and interpreter developed in Lab 3.
+
+. Modify +CommandNode+ so that it includes a counter (presumably an +int+ or the like).
+. Modify the parser a bit so that it only emits a command node after it has encountered a full run of the same command. (e.g., +-----+ becomes +CommandNode(\'-', 5)+)
+. Modify the interpreter and compiler accordingly.
+
+In short: do an optimization that performs http://en.wikipedia.org/wiki/Run-length_encoding[run-length encoding] on Brainfuck code.
+
+== June 2
+
+== May 30
+
+=== Symbol tables
+A map from an identifier within a scope to information about it (its type, where it's defined).
+
+* In an interpreter, these can be used for data storage.
+* In a compiler, these are used to generate code.
+
+=== Type checking
+Traverse an AST and verifying that it is put together correctly, and generate errors if not.
+
 == May 28
 
 === Parsing techniques
 
 Traditional approaches to parsing:
 
-* Hand-written parsers (tedious, error-prone)
-* Parser generator (tedious, steep learning curve)
+* http://en.wikipedia.org/wiki/Recursive_descent_parsing[Hand-written parsers] (tedious, error-prone)
+* http://en.wikipedia.org/wiki/Parser_generator[Parser generator] (tedious, steep learning curve)
 
 === Parser combinators
 
-Explain parser combinators through code.
+Explain http://en.wikipedia.org/wiki/Parser_combinators[parser combinators] through code.
 
 == May 27
 
