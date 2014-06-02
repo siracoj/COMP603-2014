@@ -49,6 +49,7 @@ brainfuck.exe helloworld.bf
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -159,14 +160,14 @@ void command(fstream & file, Sequence * Seq){
 
 void loop(fstream & file, Sequence * Seq){
 	Loop * loop = new Loop();
-	char c;
-	file >> c;
-	sequence(file, loop);
-	Seq->children.push_back(loop);
+	Seq->children.push_back(loop); //adds loop to the stack
+	sequence(file, loop); //gathers commands in loop
+	sequence(file, Seq); //continues with the current loop or program
 }
 
 
 void sequence(fstream & file, Sequence * Seq){
+	char o;
 	switch((char)file.peek()){
 		case '+':
 		case '-':
@@ -177,13 +178,16 @@ void sequence(fstream & file, Sequence * Seq){
 			command(file, Seq);
 			break;
 		case '[':
+			file >> o;
 			loop(file, Seq);
 			break;
 		case EOF:			
 			break;
+		case ']':
+			file >> o; //next char
+			break;
 		default:
-			char o;
-			file >> o;
+			file >> o; //next char
 			sequence(file, Seq);
 	}	
 }
@@ -201,31 +205,38 @@ void parse(fstream & file, Program * program) {
  * As a visitor, it will just print out the commands as is.
  * For Loops and the root Program node, it walks trough all the children.
  */
-class Printer : public Visitor {
+class Printer : public Visitor { //write c code
     public:
         void visit(const CommandNode * leaf) {
             switch (leaf->command) {
-                case INCREMENT:   cout << '+'; break;
-                case DECREMENT:   cout << '-'; break;
-                case SHIFT_LEFT:  cout << '<'; break;
-                case SHIFT_RIGHT: cout << '>'; break;
-                case INPUT:       cout << ','; break;
-                case OUTPUT:      cout << '.'; break;
+                case INCREMENT:   cout << "++*ptr;\n"; break;
+                case DECREMENT:   cout << "--*ptr;\n"; break;
+                case SHIFT_LEFT:  cout << "--ptr;\n"; break;
+                case SHIFT_RIGHT: cout << "++ptr;\n"; break;
+                case INPUT:       cout << "*ptr=getchar();\n"; break;
+                case OUTPUT:      cout << "putchar(*ptr);\n"; break;
             }
         }
         void visit(const Loop * loop) {
-			const vector<Node*> vec = loop->children;
-            cout << '[';
+	    const vector<Node*> vec = loop->children;
+            cout << "while (*ptr) {\n";
             for (vector<Node*>::const_iterator it = vec.begin(); it != vec.end(); ++it) {
+		cout << "\t";
                 (*it)->accept(this);
             }
-            cout << ']';
+            cout << "}\n";
         }
         void visit(const Program * program) {
-			const vector<Node*> vec = program->children;
+	    cout << "#include <stdio.h>\n";
+	    cout << "int main(){\n";
+	    cout << "char array[30000];\n";
+	    cout << "char *ptr=array;\n";
+	    const vector<Node*> vec = program->children;
             for (vector<Node*>::const_iterator it = vec.begin(); it != vec.end(); ++it) {
                 (*it)->accept(this);
             }
+	    cout << "return 0;\n";
+	    cout << "}\n";
         }
 };
 
@@ -236,11 +247,17 @@ int main(int argc, char *argv[]) {
     if (argc == 1) {
         cout << argv[0] << ": No input files." << endl;
     } else if (argc > 1) {
+
+	ofstream out("out.c");
+        streambuf *coutbuf = std::cout.rdbuf(); //save old buf
+        cout.rdbuf(out.rdbuf()); //redirect std::cout to out.txt
+
         for (int i = 1; i < argc; i++) {
-            file.open(argv[i], fstream::in);
+            file.open(argv[i], fstream::in);	    
             parse(file, & program);
-            program.accept(&printer);
+            program.accept(&printer); //pass parse tree to printer
             file.close();
         }
+	system("gcc -o out.exe out.c"); //compile c code
     }
 }
