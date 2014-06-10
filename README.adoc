@@ -7,6 +7,21 @@ Lunch?
 
 === Midterm
 
+== June 10
+
+=== Review practice midterm answer key
+
+https://github.com/lawrancej/COMP603-2014/blob/master/exams/Midterm1key.pdf?raw=true[See answer key here]
+
+=== Set up project repositories
+
+* https://github.com/COMP603/jparsec-project[Fork this if you're modifying Logisim to support Verilog input].
+* https://github.com/COMP603/jdt-project[Fork this for automated refactoring, search engine, test case generation, Java source to other translation].
+
+Chat with me if you're working on something else.
+
+Also, don't forget to clone it!
+
 == June 9
 
 === Old midterm
