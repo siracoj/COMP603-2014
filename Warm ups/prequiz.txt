@@ -5,10 +5,30 @@ machine language sent to the CPU
 4. Words? Syntax?
 5. A universally accepted way search through and edit text.
 6. It's quantifiable?(By the way, Tom waits?)
-7. Grammar is the set of rules for a languages syntax 
-8. I have no idea!
-9. Unwelcome
-10. I think parse trees are for priority in parseing, and syntax trees explain
-syntax behavior....
-11. Well that's a context free question
-12. Did I push this correctly?
+7. Regular grammars can only have terminals and non terminals where: 
+      A -> a or A-> aB
+      
+   Context free grammers use the constraints: 
+      A -> {any sequence of terminals and non-terminals}
+      
+   LR(k) grammars used for bottom up/shift-reduce parsing,
+      unambiguous, 
+      and is a subset of context-free
+      
+   LL(k) uses top down/recursive decent parsing, 
+      subset of LR(k), 
+      no left recursion, 
+      no common prefixes, 
+      Intersection between First(A) and Follow(A) != null
+      
+8. Shift-reduced parsing starts from the bottom up, 
+      shifting through the string and checking if the string that has been passed over can be reduced at each step befor shifting again
+      reducing a string of syntax through grammer until it cannot be reduced further
+
+   Recursive decent parsing starts by passing all of the code as a "program", 
+      then adding each command to a parse tree(as another tree if non-terminal and as a node if terminal)
+  
+9. When moving through a parse tree a vistor executes a set of commands using the currently "visited" node
+10. Parse trees are data structures that hold read in syntax in proper executed order, and syntax trees break down syntax into its catagories, starting with the program
+11. 
+12. 
