@@ -225,4 +225,12 @@ pip-log.txt
 >>>>>>> b0f78c951a697475725c299db1aaae47546f2169
 =======
 *.html
+<<<<<<< HEAD
 >>>>>>> 090695ae851c6c96b474dcc1092ba267b7e2dc30
+=======
+*.gz
+*.pdf
+*.aux
+*.log
+
+>>>>>>> 3183aa0fdcb802a0cb21f14120eade626ccc6544
